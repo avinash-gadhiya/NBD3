@@ -300,6 +300,13 @@ export function createBookController(els, onUiChange) {
     setView,
     toggleFullscreen,
     replayButterflies: launchButterflies,
+    // The sticker engine claims its edge presses at window level, after the
+    // viewer receives them. Cancel that camera gesture before any movement.
+    cancelPointer(pointerId) {
+      if (!pointers.has(pointerId)) return;
+      onPointerEnd({ pointerId, type: 'pointercancel' });
+      if (viewer.hasPointerCapture?.(pointerId)) viewer.releasePointerCapture(pointerId);
+    },
     destroy() {
       cancel(coverTween);
       cancel(turnTween);

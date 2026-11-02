@@ -1,0 +1,3 @@
+Tool: built-in image_gen. Use case: background-extraction.
+Edit target: user's two cats wearing frog and shark hats. Birthday cover image is placement context only.
+Prompt: Extract the paired photographic cats as one transparent sticker. Preserve the orange kitten on the left wearing the green frog hat and tabby on the right wearing the blue shark hat, original faces, fur, colors, tongues and pose. Remove all flat gray background and the loose hand-drawn black outline. Retain original dark clothing at the bottom. Crop tightly around both cats including hats; add a thin white die-cut outline hugging the silhouette. No gray or rectangular background, no black drawn outline, no new text or elements. Actual transparent PNG, landscape composition around 4:3.

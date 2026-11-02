@@ -305,13 +305,17 @@
   color: #233e65;
 }
 
-.cover-flower {
+.cover-cat-sticker {
   position: absolute;
-  bottom: 18px;
-  left: 0;
-  right: 0;
-  font-size: 30px;
-  color: #284d87;
+  bottom: 3px;
+  left: 50%;
+  width: 96px;
+  height: 64px;
+  object-fit: contain;
+  transform: translateX(-50%) rotate(-3deg);
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 2px 1px #593b2426);
 }
 
 .back {

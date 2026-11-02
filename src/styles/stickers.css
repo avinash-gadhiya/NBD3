@@ -1,0 +1,73 @@
+.sticker-canvas-root {
+  position: fixed;
+  inset: 0;
+  z-index: 18;
+  pointer-events: none;
+}
+
+.sticker-studio {
+  position: fixed;
+  top: calc(100px + var(--safe-top));
+  left: calc(28px + var(--safe-left));
+  z-index: 42;
+  text-align: left;
+}
+
+.sticker-toggle {
+  border-radius: 24px;
+  padding: 11px 16px;
+  font-size: 12px;
+  color: #81425a;
+}
+
+.sticker-toggle .glass-button-content { gap: 8px; }
+
+.sticker-panel {
+  width: min(280px, calc(100vw - 32px));
+  max-height: calc(100dvh - 170px - var(--safe-top) - var(--safe-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin-top: 12px;
+  padding: 18px;
+  background: #fffaf3f5;
+  border: 1px solid #ebd7d6;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px #60433e18;
+  color: #604b51;
+}
+
+.sticker-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sticker-panel h2 { margin: 0; color: #81425a; font: italic 600 25px/1.15 'Cormorant Garamond', Georgia, serif; }
+.sticker-panel p { font-size: 11px; line-height: 1.6; }
+.sticker-close { width: 32px; height: 32px; border-radius: 50%; font-size: 20px; flex-shrink: 0; }
+.sticker-finish { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 14px; font-size: 12px; }
+.sticker-finish select { font: inherit; padding: 8px 10px; border: 1px solid #e7cccf; border-radius: 10px; background: #fff; color: #81425a; }
+.sticker-upload { width: 100%; padding: 13px; border-radius: 14px; font-size: 12px; background-color: #f8dce5; color: #773d56; }
+.sticker-panel .sticker-note { color: #8e777c; font-size: 10px; margin-bottom: 18px; }
+.sticker-panel-actions { display: flex; gap: 8px; align-items: center; }
+.sticker-panel-actions span { margin-right: auto; font-size: 10px; color: #92737e; }
+.sticker-panel-actions button { padding: 7px 8px; border-radius: 10px; font-size: 10px; }
+.sticker-panel .sticker-help { margin: 16px 0 0; color: #8e777c; font-size: 10px; }
+.sticker-panel .sticker-status { margin: 10px 0 0; color: #81425a; font-size: 10px; }
+
+@media (max-width: 750px) {
+  .sticker-studio { top: auto; bottom: calc(18px + var(--safe-bottom)); left: calc(16px + var(--safe-left)); }
+  .sticker-toggle { width: 124px; padding: 12px; height: 50px; font-size: 11px; }
+  .sticker-panel {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 12px);
+    width: min(360px, calc(100vw - 32px - var(--safe-left) - var(--safe-right)));
+    max-height: min(60dvh, calc(100dvh - 160px - var(--safe-top) - var(--safe-bottom)));
+    margin: 0;
+    background: #fffaf3;
+  }
+  .sticker-close { width: 44px; height: 44px; }
+  .sticker-panel-actions button { min-height: 44px; }
+}
+
+@media (max-width: 1000px) and (max-height: 500px) {
+  .sticker-studio { top: auto; bottom: calc(10px + var(--safe-bottom)); left: calc(12px + var(--safe-left)); }
+  .sticker-toggle { height: 44px; min-height: 44px; }
+  .sticker-panel { position: absolute; left: 0; bottom: calc(100% + 10px); margin: 0; max-height: calc(100dvh - 130px - var(--safe-top) - var(--safe-bottom)); }
+}

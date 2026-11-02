@@ -44,17 +44,27 @@
   }
 
   .book-controls {
-    bottom: calc(28px + var(--safe-bottom));
-    width: calc(100% - 32px - var(--safe-left) - var(--safe-right));
-    max-width: 420px;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
+    bottom: calc(18px + var(--safe-bottom));
+    left: auto;
+    right: calc(16px + var(--safe-right));
+    width: calc(100% - 168px - var(--safe-left) - var(--safe-right));
+    max-width: none;
+    transform: none;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 12px;
   }
 
-  .book-controls:has(.page-navigation) { flex-direction: column; }
+  .book-controls:has(.page-navigation) { flex-direction: row; }
 
-  .page-navigation { gap: 5px; }
+  .page-navigation {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    right: 0;
+    width: calc(100vw - 32px - var(--safe-left) - var(--safe-right));
+    justify-content: center;
+    gap: 8px;
+  }
   .page-count { font-size: 10px; min-width: 29px; }
 
   .page-button {
@@ -65,32 +75,47 @@
   }
 
   .open-button {
-    min-height: 52px;
-    min-width: 145px;
+    min-height: 50px;
+    min-width: 0;
+    width: 100%;
     font-size: 10px;
-    padding: 14px 17px;
+    padding: 12px 14px;
+    gap: 8px;
   }
 
   .flight-replay {
-    left: 12px;
-    bottom: calc(144px + var(--safe-bottom));
-    font-size: 8px;
-    padding: 10px;
+    left: 50%;
+    bottom: calc(202px + var(--safe-bottom));
+    translate: -50% 0;
+    min-height: 40px;
+    font-size: 9px;
+    padding: 10px 12px;
+    white-space: nowrap;
   }
 
-  .open-cue { bottom: calc(142px + var(--safe-bottom)); }
+  .open-cue {
+    bottom: calc(108px + var(--safe-bottom));
+    left: 90px;
+    right: 90px;
+    font-size: 12px;
+    text-wrap: balance;
+  }
+  .open-cue span { display: none; }
 
   .coffee-kitty-companion {
-    width: clamp(76px, 24vw, 110px);
-    left: calc(18px + var(--safe-left));
-    bottom: calc(clamp(156px, 19dvh, 200px) + var(--safe-bottom));
+    width: 64px;
+    left: calc(16px + var(--safe-left));
+    bottom: calc(100px + var(--safe-bottom));
   }
 
   .pixel-cat-companion {
-    width: clamp(96px, 28vw, 120px);
-    right: calc(18px + var(--safe-right));
-    bottom: calc(112px + var(--safe-bottom));
+    width: 84px;
+    right: calc(16px + var(--safe-right));
+    bottom: calc(100px + var(--safe-bottom));
   }
+
+  .viewer-wrap:has(.page-navigation) .coffee-kitty-companion,
+  .viewer-wrap:has(.page-navigation) .pixel-cat-companion { bottom: calc(148px + var(--safe-bottom)); }
 
   .music-panel {
     top: calc(72px + var(--safe-top));
@@ -111,8 +136,7 @@
 @media (max-width: 650px) {
   .brand { gap: 8px; }
   .sound .glass-button-content > span { font-size: 9px; }
-  .open-cue { font-size: 13px; }
-  .open-button { gap: 15px; }
+  .open-cue { font-size: 12px; }
 }
 
 @media (max-width: 380px) {
@@ -132,13 +156,16 @@
   }
   .viewer-toolbar { top: calc(60px + var(--safe-top)); }
   .camera-presets button { min-height: 36px; padding: 7px 10px; }
-  .book-controls { bottom: calc(10px + var(--safe-bottom)); width: max-content; max-width: calc(100% - 32px); }
+  .book-controls { bottom: calc(10px + var(--safe-bottom)); left: auto; right: calc(12px + var(--safe-right)); transform: none; width: max-content; max-width: calc(100% - 160px); align-items: flex-end; }
   .book-controls:has(.page-navigation) { flex-direction: row; }
-  .open-button { min-height: 44px; padding: 9px 15px; }
+  .page-navigation { position: static; width: auto; }
+  .open-button { min-height: 44px; width: auto; padding: 9px 15px; }
   .open-cue { bottom: calc(70px + var(--safe-bottom)); font-size: 12px; }
   .coffee-kitty-companion { width: 64px; left: calc(16px + var(--safe-left)); bottom: calc(65px + var(--safe-bottom)); }
   .pixel-cat-companion { width: 88px; right: calc(16px + var(--safe-right)); bottom: calc(65px + var(--safe-bottom)); }
-  .flight-replay { bottom: calc(12px + var(--safe-bottom)); padding: 8px; }
+  .viewer-wrap:has(.page-navigation) .coffee-kitty-companion,
+  .viewer-wrap:has(.page-navigation) .pixel-cat-companion { bottom: calc(65px + var(--safe-bottom)); }
+  .flight-replay { left: 50%; translate: -50% 0; bottom: calc(64px + var(--safe-bottom)); padding: 8px; }
 }
 
 @media (hover: none) {

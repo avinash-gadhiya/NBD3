@@ -1,4 +1,5 @@
 import pinkBow from '../../assets/images/pink-bow.png';
+import catDuo from '../../assets/stickers/frog-shark-cats.png';
 import PageSticker from './PageSticker.jsx';
 
 export default function Cover({ coverRef, content }) {
@@ -10,7 +11,7 @@ export default function Cover({ coverRef, content }) {
           <img className="cover-bow" src={pinkBow} alt="" aria-hidden="true" />
           <h1 className="cover-title"><span>{content.coverTitle[0]}</span><em>{content.coverTitle[1]}</em></h1>
           <div className="ribbon">For {content.recipientName}</div>
-          <div className="cover-flower" aria-hidden="true">✿</div>
+          <img className="cover-cat-sticker" src={catDuo} alt="Two playful cats wearing frog and shark hats" draggable="false" />
         </div>
       </div>
       <div className="back paper">

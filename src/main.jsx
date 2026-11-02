@@ -7,6 +7,7 @@ import './styles/music.css';
 import './styles/book.css';
 import './styles/butterflies.css';
 import './styles/pixel-cat.css';
+import './styles/stickers.css';
 import './styles/responsive.css';
 
 createRoot(document.getElementById('root')).render(

@@ -84,6 +84,22 @@ test('mobile cover is enlarged and opening fits the full spread on screen', t =>
   assert.equal(scale(), closedScale, 'Closing restores the larger cover');
 });
 
+test('a sticker claiming a pointer cancels camera rotation and page clicks', t => {
+  const h = setup(t);
+  const target = h.pointerTarget('.front');
+  const pointer = { target, pointerId: 7, clientX: 500, clientY: 300, button: 0 };
+  const before = h.els.scene.style.transform;
+  h.els.viewer.listeners.pointerdown(pointer);
+  h.controller.cancelPointer(7);
+  h.els.viewer.listeners.pointermove({ ...pointer, clientX: 650, clientY: 380 });
+  h.els.viewer.listeners.pointerup({ ...pointer, type: 'pointerup' });
+  h.advance();
+  assert.equal(h.els.scene.style.transform, before, 'Peeling does not rotate the camera');
+  assert.equal(h.ui.opened, false, 'Releasing the sticker does not open the book');
+  h.click('.front');
+  assert.equal(h.ui.opened, true, 'The book still responds to its next click');
+});
+
 test('navigates all three spreads in both directions and clamps at the ends', t => {
   const h = setup(t);
   h.controller.turnPage();
