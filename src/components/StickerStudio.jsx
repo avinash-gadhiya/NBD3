@@ -71,7 +71,34 @@ export default function StickerStudio({ onPointerClaimed }) {
       if (disposed) return;
       instance = await createStickers({ container: canvasRoot.current, size: stickerScale(), intro: false });
       if (disposed) return;
-      extras.current = [instance.use(residue()), instance.use(bubbles())];
+      const residueEffect = instance.use(residue({ crumbLife: 2 }));
+      extras.current = [residueEffect, instance.use(bubbles())];
+
+      // Keep the peel effect briefly, then fade and clear its actual hit areas too.
+      const residueLayers = canvasRoot.current.querySelectorAll('.hs-residue, .hs-crumbs');
+      let cleanupTimer;
+      let fadeTimer;
+      const stopCleanup = () => {
+        window.clearTimeout(cleanupTimer);
+        window.clearTimeout(fadeTimer);
+        residueLayers.forEach(layer => { layer.style.opacity = '1'; });
+      };
+      const scheduleCleanup = () => {
+        stopCleanup();
+        cleanupTimer = window.setTimeout(() => {
+          residueLayers.forEach(layer => { layer.style.opacity = '0'; });
+          fadeTimer = window.setTimeout(() => {
+            residueEffect.clear();
+            residueLayers.forEach(layer => { layer.style.opacity = '1'; });
+          }, 600);
+        }, 1800);
+      };
+      const unsubscribeCleanup = [
+        instance.on('peel', stopCleanup),
+        instance.on('release', scheduleCleanup),
+        instance.on('detach', scheduleCleanup),
+        instance.on('stick', scheduleCleanup),
+      ];
 
       const cancelCamera = event => {
         if (event.defaultPrevented && instance.pointer.down) claimHandler.current(event.pointerId);
@@ -96,9 +123,17 @@ export default function StickerStudio({ onPointerClaimed }) {
         if (changed) instance.restore(state).catch(error => console.error('Could not reposition stickers.', error));
       };
       window.addEventListener('pointerdown', cancelCamera);
+      window.addEventListener('pointerdown', stopCleanup);
+      window.addEventListener('pointerup', scheduleCleanup);
+      window.addEventListener('pointercancel', scheduleCleanup);
       window.addEventListener('resize', keepOnScreen);
       unbind = () => {
+        stopCleanup();
+        unsubscribeCleanup.forEach(unsubscribe => unsubscribe());
         window.removeEventListener('pointerdown', cancelCamera);
+        window.removeEventListener('pointerdown', stopCleanup);
+        window.removeEventListener('pointerup', scheduleCleanup);
+        window.removeEventListener('pointercancel', scheduleCleanup);
         window.removeEventListener('resize', keepOnScreen);
       };
 

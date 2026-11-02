@@ -5,6 +5,14 @@
   pointer-events: none;
 }
 
+.sticker-canvas-root :is(.hs-residue, .hs-crumbs) {
+  transition: opacity .55s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticker-canvas-root :is(.hs-residue, .hs-crumbs) { transition: none; }
+}
+
 .sticker-studio {
   position: fixed;
   top: calc(100px + var(--safe-top));
