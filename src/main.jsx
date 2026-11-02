@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 import './styles/base.css';
 import './styles/controls.css';
+import './styles/button-birds.css';
 import './styles/music.css';
 import './styles/book.css';
 import './styles/butterflies.css';

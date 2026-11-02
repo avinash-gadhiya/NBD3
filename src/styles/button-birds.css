@@ -1,0 +1,49 @@
+.button-birds {
+  position: fixed;
+  inset: 0;
+  z-index: 46;
+  pointer-events: none;
+  user-select: none;
+}
+.button-birds[hidden] { display: none; }
+.button-bird {
+  --bird-direction: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
+  translate: -50% -88%;
+  color: #4493d0;
+  will-change: transform;
+}
+.button-bird[data-phase='away'] { visibility: hidden; }
+.button-bird:nth-child(2) { color: #3885c0; }
+.button-bird:nth-child(3) { color: #4d9bd4; }
+.button-bird svg { display: block; width: 100%; height: 100%; overflow: visible; fill: currentColor; transform: scaleX(var(--bird-direction)); }
+.button-bird-legs { fill: none; stroke: #2f6a99; stroke-width: 1.3; stroke-linecap: round; }
+.button-bird-eye { fill: #fff; }
+.button-bird-wing { fill: #2f75a9; transform-origin: 14px 8px; }
+.button-bird-head { transform-origin: 15px 7px; transition: transform .2s ease; }
+.button-bird[data-alert='true'] .button-bird-head { transform: rotate(-17deg); }
+.button-bird-body { transform-origin: 12px 14px; }
+@media (prefers-reduced-motion: no-preference) {
+  .button-bird[data-phase='perched'] .button-bird-body { animation: button-bird-settle 5s ease-in-out infinite; }
+  .button-bird:nth-child(2) .button-bird-body { animation-delay: -1.7s; }
+  .button-bird:nth-child(3) .button-bird-body { animation-delay: -3.1s; }
+  .button-bird:is([data-phase='arriving'], [data-phase='flying']) .button-bird-wing { animation: button-bird-flap .12s ease-in-out infinite alternate; }
+}
+@keyframes button-bird-settle {
+  0%, 40%, 60%, 100% { transform: translateY(0) scaleY(1); }
+  45%, 55% { transform: translateY(.6px) scaleY(.94); }
+}
+@keyframes button-bird-flap {
+  from { transform: rotate(-55deg) scaleY(.7); }
+  to { transform: rotate(55deg) scaleY(1.2); }
+}
+@media (max-width: 750px) {
+  .button-bird { width: 20px; height: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button-birds { display: none; }
+}

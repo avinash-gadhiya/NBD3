@@ -6,6 +6,7 @@ import ViewerToolbar from './components/viewer/ViewerToolbar.jsx';
 import BookControls from './components/viewer/BookControls.jsx';
 import Book from './components/book/Book.jsx';
 import StickerStudio from './components/StickerStudio.jsx';
+import ButtonBirds from './components/ButtonBirds.jsx';
 import { useBookExperience } from './hooks/useBookExperience.js';
 import { useCardContent } from './hooks/useCardContent.js';
 
@@ -38,6 +39,7 @@ export default function App() {
         </div>
       </main>
       <StickerStudio onPointerClaimed={actions.cancelPointer} />
+      <ButtonBirds />
       <div className="butterfly-sky" ref={refs.sky} aria-hidden="true"></div>
       <div className="sr-only" role="status" aria-live="polite">{ui.flightStatus}</div>
     </>
