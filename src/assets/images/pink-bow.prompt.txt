@@ -1,0 +1,5 @@
+Tool: built-in image_gen (transparent background edit).
+Input: user's attached pink satin bow; website screenshot supplied as context only.
+Output: pink-bow.png
+
+Use case: background-extraction. Asset type: transparent PNG header logo. Input images: the pink satin bow on gray is the edit target; the birthday-book website screenshot is context only. Remove only the gray background from the attached pink bow image. Preserve the bow's exact shape, two loops, central knot, long pointed tails, pink colors, painted satin folds, highlights, and outline. Keep the complete bow centered with minimal transparent padding. Output the bow alone on a genuinely transparent background. No new elements, no text, no shadow or background.

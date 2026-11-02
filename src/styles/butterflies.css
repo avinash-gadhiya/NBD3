@@ -1,0 +1,85 @@
+/* Origami butterflies; elements are created by lib/butterflyFlight.js. */
+
+.butterfly-sky {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  perspective: 1100px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.paper-butterfly {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.origami-wing {
+  position: absolute;
+  left: 0;
+  top: -74px;
+  width: 100px;
+  height: 140px;
+  transform-origin: 0 74px;
+  transform-style: preserve-3d;
+}
+
+.wing-art {
+  display: block;
+  width: 100px;
+  height: 140px;
+  overflow: visible;
+  backface-visibility: visible;
+  transform: translateZ(.3px);
+}
+
+.butterfly-body {
+  position: absolute;
+  top: -24px;
+  left: -3px;
+  width: 6px;
+  height: 51px;
+  border-radius: 35%;
+  background: linear-gradient(90deg, #ad7b38, #f4d18a 48%, #b38950 55%, #ead1a0);
+  transform: translateZ(5px);
+  transform-style: preserve-3d;
+}
+
+.antenna {
+  position: absolute;
+  top: -23px;
+  width: 15px;
+  height: 29px;
+  border-top: 1.5px solid #c79c59;
+  border-right: 1.5px solid #c79c59;
+  border-radius: 70% 80% 0 0;
+  transform-origin: bottom;
+}
+
+.antenna.left {
+  left: -12px;
+  transform: rotate(-20deg);
+}
+
+.antenna.right {
+  left: 2px;
+  transform: scaleX(-1) rotate(-20deg);
+}
+
+.antenna::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 4px;
+  height: 4px;
+  border: 1px solid #ba8b45;
+  border-radius: 50%;
+  background: #efdaa7;
+}

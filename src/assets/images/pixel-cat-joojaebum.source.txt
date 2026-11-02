@@ -1,0 +1,6 @@
+Asset: cat pixel Sticker by joojaebum.gif, supplied by the user.
+Original file: C:/Users/avina/Downloads/cat pixel Sticker by joojaebum.gif
+The GIF is used unchanged, with its original transparent background.
+Dimensions: 480 x 480. Frames: 12. Frame delay: 170 ms.
+pixel-cat-joojaebum-still.png is frame 0 for reduced-motion settings.
+CSS crops the transparent padding; the animated source is preserved.

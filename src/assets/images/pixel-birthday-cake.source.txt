@@ -1,0 +1,6 @@
+Reference supplied by the user: https://in.pinterest.com/pin/725149977492925241/
+Original GIF: https://i.pinimg.com/originals/8c/c5/07/8cc5071ae5cdd2369999068eb93b2b0c.gif
+Dimensions: 500 x 450. Animation frames: 14.
+The original GIF is unchanged and retains its transparent background.
+pixel-birthday-cake-still.png is frame 0 for reduced-motion settings.
+CSS trims the empty padding; both existing folding panels display matching halves.

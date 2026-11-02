@@ -1,0 +1,554 @@
+/* The 3D book: pages, cover, and the pop-up portrait, kitten and cake. */
+
+.desk-shadow {
+  position: absolute;
+  left: 50%;
+  top: 71%;
+  width: 620px;
+  height: 82px;
+  transform: translate(-50%, -50%);
+  background: #57432827;
+  border-radius: 50%;
+  filter: blur(22px);
+  pointer-events: none;
+}
+
+.scene {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 760px;
+  height: 460px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.book {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.experience.dragging .book { cursor: grabbing; }
+
+.paper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../assets/textures/grain.svg');
+  opacity: .18;
+  mix-blend-mode: multiply;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.page-sticker {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(1px 0 0 #fffaf0) drop-shadow(-1px 0 0 #fffaf0) drop-shadow(0 1px 0 #fffaf0) drop-shadow(0 -1px 0 #fffaf0) drop-shadow(1px 2px 1px #593b2426);
+}
+
+.page-sticker-crop {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.page-sticker img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  height: auto;
+  image-rendering: pixelated;
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* Right-hand page */
+
+.right-page {
+  position: absolute;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  background: #fcf3dc;
+  border: 8px solid #e4a6aa;
+  border-radius: 2px 7px 7px 2px;
+  box-shadow: 0 2px 0 #f0d8b1, 0 4px 0 #baa27b, 6px 7px 15px #51412922;
+  transform: translateZ(0);
+}
+
+.right-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #5a3e28, transparent 85%);
+  opacity: var(--hinge-shade, 0);
+  pointer-events: none;
+}
+
+.wall {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent 0 31px, #e2d5b4 32px, transparent 33px);
+  opacity: .6;
+}
+
+.wall::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 67px, #d8ccac 68px, transparent 69px);
+  opacity: .4;
+}
+
+.picture {
+  position: absolute;
+  top: 112px;
+  right: 27px;
+  width: 80px;
+  height: 88px;
+  background: #fffaf0;
+  border: 7px solid #fcf5e2;
+  box-shadow: 2px 3px 0 #c6bb9b;
+  transform: rotate(6deg);
+  z-index: 1;
+}
+
+.picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 58%;
+}
+
+.inside-top {
+  position: absolute;
+  top: 28px;
+  left: 130px;
+  right: 18px;
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #70445b;
+}
+
+.inside-top em {
+  display: block;
+  margin-top: 4px;
+  font: italic 600 32px/1.1 'Cormorant Garamond', Georgia, serif;
+  color: #da5b75;
+}
+
+.inside-bottom {
+  position: absolute;
+  bottom: 32px;
+  left: 14px;
+  right: 14px;
+  font: 12px/1.55 'DM Serif Display', Georgia, serif;
+  color: #4d5144;
+}
+
+.page-one .inside-bottom { bottom: 24px; }
+
+.page-imprint {
+  position: absolute;
+  bottom: 10px;
+  left: 14px;
+  right: 14px;
+  font: 500 6.5px/1.4 'DM Sans', sans-serif;
+  letter-spacing: 1.7px;
+  color: #ab7a82;
+}
+
+.page-flower {
+  position: absolute;
+  right: 25px;
+  top: 235px;
+  font-size: 50px;
+  color: #c6ad33;
+}
+
+/* Page 1 leaf: turns on the spine like the cover. Page 1 is its front, page 2's left side its back. */
+
+.leaf {
+  position: absolute;
+  inset: 0;
+  transform-origin: 380px 50%;
+  transform-style: preserve-3d;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.leaf-front {
+  backface-visibility: hidden;
+  pointer-events: auto;
+}
+
+.leaf-back {
+  position: absolute;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  background: #fce9b5;
+  border: 8px solid #db768c;
+  border-radius: 7px 3px 3px 7px;
+  box-shadow: 0 1px 0 #e5cca0, 0 2px 0 #ab8d67;
+  transform: rotateY(180deg) translateZ(1px);
+  backface-visibility: hidden;
+  pointer-events: auto;
+}
+
+.leaf-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(270deg, #6753341a, transparent 20%);
+  pointer-events: none;
+}
+
+/* Cover: front face and inside (back) face */
+
+.cover {
+  position: absolute;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.front,
+.back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 3px 7px 7px 3px;
+  box-shadow: 0 1px 0 #e5cca0, 0 2px 0 #ab8d67;
+}
+
+.front {
+  padding: 14px;
+  background: #f2cf49;
+  border: 1px solid #dfbd3e;
+  box-shadow: inset 5px 0 8px #b8902926, 0 1px 0 #e5cca0, 0 3px 0 #b99176;
+  transform: translateZ(4px);
+}
+
+.border {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border: 2px solid #284d87;
+  border-radius: 100px 100px 5px 5px;
+}
+
+.cover-bow {
+  position: absolute;
+  top: 38px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+}
+
+.cover-title {
+  position: absolute;
+  top: 153px;
+  left: 12px;
+  right: 12px;
+  margin: 0;
+  font: 600 49px/.95 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -.8px;
+  color: #284d87;
+}
+
+.cover-title span { display: block; }
+
+.cover-title em {
+  display: block;
+  font-size: 76px;
+  font-weight: 600;
+  line-height: 1;
+  color: #d75076;
+  text-shadow: 1px 2px #f4e6bc;
+}
+
+.ribbon {
+  position: absolute;
+  left: -6%;
+  width: 112%;
+  top: 320px;
+  padding: 12px 4px;
+  background: #e7749a;
+  border-top: 2px solid #345284;
+  border-bottom: 2px solid #345284;
+  transform: rotate(-7deg);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: #233e65;
+}
+
+.cover-flower {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  font-size: 30px;
+  color: #284d87;
+}
+
+.back {
+  background: #fce9b5;
+  border: 8px solid #db768c;
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+.back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(270deg, #6753341a, transparent 20%);
+  pointer-events: none;
+}
+
+.inside-frame {
+  position: absolute;
+  inset: 12px;
+  padding: 24px 12px;
+  border: 1px solid #b88c9e99;
+}
+
+.tiny-label {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #b45e6e;
+}
+
+.inside-frame h2,
+.inside-frame .sun,
+.inside-frame p,
+.inside-frame .love {
+  width: 200px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.inside-frame h2 {
+  margin: 22px 0 0;
+  font: 600 36px/1.05 'Cormorant Garamond', Georgia, serif;
+  color: #70445b;
+}
+
+.inside-frame h2 em {
+  font-size: 36px;
+  color: #cf5977;
+}
+
+.sun {
+  margin: 8px;
+  font-size: 42px;
+  color: #c7a15e;
+}
+
+.inside-frame p {
+  margin: 0;
+  font: 13px/1.6 'DM Serif Display', Georgia, serif;
+}
+
+.love {
+  margin-top: 15px;
+  font: italic 600 20px/1.2 'Cormorant Garamond', Georgia, serif;
+  color: #bc5a75;
+}
+
+.corner-flower {
+  position: absolute;
+  bottom: 1px;
+  left: 8px;
+  font-size: 32px;
+  color: #b9b868;
+}
+
+.spine {
+  position: absolute;
+  left: 376px;
+  top: 0;
+  width: 8px;
+  height: 460px;
+  background: linear-gradient(90deg, #ab956540, #fff4da, #7a654322);
+  transform: translateZ(1px);
+}
+
+/* Pop-ups. Each fold layer spans the book; its panels are placed by matrix3d. */
+
+.stand,
+.paper-cake {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 760px;
+  height: 460px;
+  transform-origin: 0 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.stand { will-change: transform; }
+
+.portrait-half,
+.cake-half {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  transform-origin: 0 0;
+  transform-style: preserve-3d;
+  backface-visibility: visible;
+  pointer-events: auto;
+}
+
+.portrait-half {
+  width: 145px;
+  height: 295px;
+}
+
+.portrait-half.half-left::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: linear-gradient(90deg, transparent 85%, #59463312);
+  opacity: var(--fold-light, .1);
+  pointer-events: none;
+}
+
+.portrait-print {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 290px;
+  height: 295px;
+  object-fit: contain;
+  object-position: bottom;
+  backface-visibility: visible;
+  pointer-events: none;
+  user-select: none;
+}
+
+.half-right .portrait-print { left: -145px; }
+
+.cat-stand {
+  position: absolute;
+  transform-origin: 50% 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+  visibility: hidden;
+  pointer-events: auto;
+}
+
+.cat-body-stand {
+  left: 463px;
+  top: 244px;
+  width: 120px;
+  height: 120px;
+}
+
+/* Page 2, right side: the mirror selfie stands beside the centre portrait, the puppy at her feet. */
+.mirror-stand {
+  left: 634px;
+  top: 164px;
+  width: 120px;
+  height: 222px;
+}
+
+.puppy-stand {
+  left: 578px;
+  top: 300px;
+  width: 82px;
+  height: 86px;
+}
+
+/* Page 2's headline sits clear of the centre portrait's right panel. */
+.page-two .inside-top {
+  left: 150px;
+  font-size: 13px;
+}
+
+.page-two .inside-top em { font-size: 30px; }
+
+/* Page 3 uses the same paper, typography and fold geometry as the other spreads. */
+.page-three .inside-top {
+  left: 150px;
+  font-size: 13px;
+}
+
+.page-three .inside-top em { font-size: 30px; }
+
+.motivation-page .inside-frame h2 { font-size: 34px; }
+.motivation-page .inside-frame h2 em { font-size: 34px; }
+
+.third-self-stand {
+  left: 546px;
+  top: 164px;
+  width: 152px;
+  height: 222px;
+}
+
+.cat-stand.third-self-stand img { object-fit: contain; object-position: bottom; }
+
+.cat-stand img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+
+.cake-half {
+  width: 52.5px;
+  height: 126px;
+}
+
+.paper-cake-art {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 105px;
+  height: 126px;
+  overflow: hidden;
+}
+
+.paper-cake-print {
+  /* Trim the original GIF's transparent padding without stretching the cake. */
+  position: absolute;
+  top: -4.5px;
+  left: -22.5px;
+  width: 150px;
+  height: 135px;
+  max-width: none;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.cake-half-right .paper-cake-art { left: -52.5px; }

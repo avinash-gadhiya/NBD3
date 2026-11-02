@@ -1,0 +1,6 @@
+Source: user-uploaded hello kitty coffee GIF.gif.
+Original: C:/Users/avina/Downloads/hello kitty coffee GIF.gif
+Dimensions: 443 x 448. Animation frames: 6.
+The original GIF is unchanged. CSS uses hello-kitty-mask.svg to hide the outer background while preserving white fur.
+The mask follows the combined silhouettes of all frames to preserve the entire animation.
+hello-kitty-coffee-still.png is the original first frame for reduced-motion settings.

@@ -1,0 +1,74 @@
+.pixel-cat-companion {
+  position: fixed;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  width: clamp(140px, 12vw, 200px);
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  z-index: 20;
+  pointer-events: none;
+  user-select: none;
+}
+
+.pixel-cat-companion picture {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pixel-cat-companion img {
+  /* Show the 168 x 84 region at (168, 196), trimming the GIF's empty padding. */
+  position: absolute;
+  display: block;
+  width: 285.7143%;
+  max-width: none;
+  left: -100%;
+  top: -233.3333%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.coffee-kitty-companion {
+  position: fixed;
+  left: max(200px, env(safe-area-inset-left));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  width: clamp(110px, 10vw, 150px);
+  z-index: 20;
+  pointer-events: none;
+  user-select: none;
+}
+
+.coffee-kitty-companion picture,
+.coffee-kitty-companion img {
+  display: block;
+  width: 100%;
+}
+
+.coffee-kitty-companion img {
+  height: auto;
+  image-rendering: pixelated;
+  /* Keep the white fur; mask only the border-connected outer background. */
+  mask-image: url('../assets/images/hello-kitty-mask.svg');
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url('../assets/images/hello-kitty-mask.svg');
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+}
+
+@media (max-width: 1000px) {
+  .coffee-kitty-companion {
+    width: 110px;
+    left: max(10px, env(safe-area-inset-left));
+    bottom: max(150px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 750px) {
+  .pixel-cat-companion {
+    width: 120px;
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(120px, env(safe-area-inset-bottom));
+  }
+}

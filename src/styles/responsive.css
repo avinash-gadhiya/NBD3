@@ -1,0 +1,72 @@
+@media (max-width: 750px) {
+  header {
+    height: 60px;
+    padding: 15px;
+  }
+
+  .brand {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand-wordmark { font-size: 30px; }
+  .brand-tagline { font-size: 6px; letter-spacing: .65px; }
+
+  .header-actions { gap: 5px; }
+
+  .fullscreen-button {
+    width: 30px;
+    height: 30px;
+    font-size: 19px;
+  }
+
+  .sound { padding: 6px 9px; }
+
+  .viewer-toolbar {
+    top: 66px;
+    padding: 3px 4px;
+    white-space: nowrap;
+  }
+
+  .camera-presets button {
+    font-size: 9px;
+    padding: 7px 10px;
+  }
+
+  .book-controls { bottom: 45px; gap: 8px; }
+
+  .page-navigation { gap: 5px; }
+  .page-count { font-size: 10px; min-width: 29px; }
+
+  .page-button {
+    font-size: 10px;
+    padding: 13px 15px;
+  }
+
+  .open-button {
+    min-width: 145px;
+    font-size: 10px;
+    padding: 14px 17px;
+  }
+
+  .flight-replay {
+    left: 12px;
+    bottom: 105px;
+    font-size: 8px;
+    padding: 10px;
+  }
+
+  .open-cue { bottom: 150px; }
+}
+
+@media (max-width: 650px) {
+  .brand { gap: 8px; }
+  .sound .glass-button-content > span { font-size: 9px; }
+  .open-cue { font-size: 13px; }
+  .open-button { gap: 15px; }
+}
