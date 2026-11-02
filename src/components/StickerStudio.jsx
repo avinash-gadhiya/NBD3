@@ -201,12 +201,12 @@ export default function StickerStudio({ onPointerClaimed }) {
   return (
     <>
       <div className="sticker-canvas-root" ref={canvasRoot} />
-      <aside className="sticker-studio" aria-label="Decorate with stickers" data-stickers-ignore data-birds-ignore onKeyDown={event => { if (event.key === 'Escape') setOpen(false); }}>
+      <aside className="sticker-studio" aria-label="Decorate with stickers" data-stickers-ignore onKeyDown={event => { if (event.key === 'Escape') setOpen(false); }}>
         <GlassButton className="sticker-toggle" aria-expanded={open} aria-controls="sticker-panel" onClick={() => setOpen(value => !value)}>
           <Icon icon={Sticker} />Add stickers
         </GlassButton>
         {open && (
-          <section className="sticker-panel" id="sticker-panel" aria-labelledby="sticker-panel-title" data-birds-pause>
+          <section className="sticker-panel" id="sticker-panel" aria-labelledby="sticker-panel-title">
             <div className="sticker-panel-heading"><h2 id="sticker-panel-title">Add stickers</h2><button className="sticker-close" aria-label="Close stickers panel" onClick={() => setOpen(false)}><Icon icon={X} size={16} /></button></div>
             <div className="sticker-style-options" role="group" aria-label="Style for new stickers">
               {STICKER_STYLES.map(style => (

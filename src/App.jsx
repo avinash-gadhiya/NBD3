@@ -27,7 +27,6 @@ export default function App() {
             view={ui.view}
             onFrontView={() => actions.setView('front')}
             onTopView={() => actions.setView('top')}
-            onReset={actions.reset}
           />
           <div className="experience" ref={refs.viewer} tabIndex={0} aria-label={VIEWER_LABEL}>
             <div className="desk-shadow" ref={refs.deskShadow}></div>
