@@ -85,9 +85,10 @@
 
   .flight-replay {
     left: 50%;
-    bottom: calc(202px + var(--safe-bottom));
+    /* Keep one small gap above the page-navigation row. */
+    bottom: calc(136px + var(--safe-bottom));
     translate: -50% 0;
-    min-height: 40px;
+    min-height: 44px;
     font-size: 9px;
     padding: 10px 12px;
     white-space: nowrap;
