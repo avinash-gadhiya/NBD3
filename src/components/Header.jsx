@@ -1,6 +1,5 @@
 import BowLogo from './BowLogo.jsx';
 import GlassButton from './GlassButton.jsx';
-import MusicControl from './MusicControl.jsx';
 
 export default function Header({ fullscreen, onToggleFullscreen }) {
   return (
@@ -14,7 +13,6 @@ export default function Header({ fullscreen, onToggleFullscreen }) {
       </a>
       <div className="header-actions">
         <GlassButton className="fullscreen-button" aria-label={fullscreen ? 'Exit full screen' : 'Enter full screen'} title="Full screen" onClick={onToggleFullscreen}>⛶</GlassButton>
-        <MusicControl />
       </div>
     </header>
   );

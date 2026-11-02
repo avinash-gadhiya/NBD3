@@ -1,0 +1,3 @@
+Tool: built-in image_gen. Use case: background-extraction and compositing.
+Inputs: user's MEOW artwork and photographic cat as edit targets; book screenshot as placement reference only.
+Prompt: Remove the plain white backgrounds, retaining white fur, lettering highlights, black outlines, pink hearts and the thin white die-cut border. Preserve the pink MEOW artwork with black cat peeking from the M and paw-shaped O, and the photographic tabby cat sticking its tongue out with paws and pink heart accents. Compose as one compact wide sticker group: MEOW on the left, cat on the right. Tight framing, landscape about 2:1, actual transparent background. Do not include the book, people, red rectangle, page or screenshot. No new text or backdrop.

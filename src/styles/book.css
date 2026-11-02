@@ -502,6 +502,18 @@
 
 .page-three .inside-top em { font-size: 30px; }
 
+.page-three-cat-stickers {
+  position: absolute;
+  left: 150px;
+  top: 110px;
+  width: 200px;
+  height: 108px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 2px 1px #593b2426);
+}
+
 .motivation-page .inside-frame h2 { font-size: 34px; }
 .motivation-page .inside-frame h2 em { font-size: 34px; }
 

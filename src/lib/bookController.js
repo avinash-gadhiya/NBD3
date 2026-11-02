@@ -94,7 +94,10 @@ export function createBookController(els, onUiChange) {
     pageThree.style.setProperty('--hinge-shade', String(.22 * Math.sin(spreadThree * rad)));
     book.style.transform = `translateX(${-190 * (1 - progress)}px)`;
     const raised = Math.max(Math.sin(coverAngle * rad), Math.sin(leafAngle * rad), Math.sin(secondLeafAngle * rad));
-    const fit = Math.min(1.75, (viewer.clientWidth - 44) / 850, (viewer.clientHeight - 160) / (560 * (1 + .65 * raised)));
+    // A closed book occupies one page. Give it more of the phone's width,
+    // then smoothly make room for the full spread as the cover opens.
+    const fitWidth = viewer.clientWidth <= 750 ? 520 + 330 * progress : 850;
+    const fit = Math.min(1.75, (viewer.clientWidth - 44) / fitWidth, (viewer.clientHeight - 160) / (560 * (1 + .65 * raised)));
     const cameraTilt = cameraTouched ? tilt : 50;
     scene.style.transform = `translate(-50%,-50%) translate(${panX}px,${panY - 5}px) scale(${fit * zoom}) rotateX(${cameraTilt}deg) rotateZ(${yaw}deg)`;
     deskShadow.style.transform = `translate(calc(-50% + ${panX}px),calc(-50% + ${panY}px)) scale(${fit * zoom})`;

@@ -69,6 +69,21 @@ function setup(t, reduced = false) {
   return { controller, els, advance, visiblePage, pointerTarget, click, get ui() { return ui; } };
 }
 
+test('mobile cover is enlarged and opening fits the full spread on screen', t => {
+  const h = setup(t);
+  h.els.viewer.clientWidth = 393;
+  h.els.viewer.clientHeight = 852;
+  h.controller.reset();
+  const scale = () => Number(h.els.scene.style.transform.match(/scale\(([^)]+)\)/)[1]);
+  const closedScale = scale();
+  assert.ok(closedScale > .65, 'Closed cover uses more of the mobile viewport');
+  h.controller.toggleBook(); h.advance();
+  assert.ok(scale() < closedScale, 'Open spread fits within the mobile viewport');
+  assert.ok(760 * scale() < 393, 'Both open pages fit horizontally');
+  h.controller.toggleBook(); h.advance();
+  assert.equal(scale(), closedScale, 'Closing restores the larger cover');
+});
+
 test('navigates all three spreads in both directions and clamps at the ends', t => {
   const h = setup(t);
   h.controller.turnPage();
