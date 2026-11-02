@@ -9,8 +9,10 @@ import StickerStudio from './components/StickerStudio.jsx';
 import ButtonBirds from './components/ButtonBirds.jsx';
 import { useBookExperience } from './hooks/useBookExperience.js';
 import { useCardContent } from './hooks/useCardContent.js';
+import { ArrowUpRight, Origami } from 'lucide-react';
+import Icon from './components/Icon.jsx';
 
-const VIEWER_LABEL = 'Interactive birthday book. Click the cover to open. Click the right page to go forward or the left page to go back. Use Close your card to close. Drag to rotate; scroll to zoom; Shift-drag to move. PageDown and PageUp turn pages.';
+const VIEWER_LABEL = 'Interactive birthday book. Click the cover to open. Click the right page to go forward or the left page to go back. Click the left side of the first page or use Close your card to close. Drag to rotate; scroll to zoom; Shift-drag to move. PageDown and PageUp turn pages.';
 
 export default function App() {
   const { refs, ui, actions } = useBookExperience();
@@ -30,12 +32,12 @@ export default function App() {
           <div className="experience" ref={refs.viewer} tabIndex={0} aria-label={VIEWER_LABEL}>
             <div className="desk-shadow" ref={refs.deskShadow}></div>
             <Book refs={refs} content={content} />
-            <div className="open-cue" hidden={ui.cueHidden}>Click the book to open <span>↗</span></div>
+            <div className="open-cue" hidden={ui.cueHidden}>Click the book to open <span><Icon icon={ArrowUpRight} size={14} /></span></div>
           </div>
           <BookControls opened={ui.opened} page={ui.page} onToggle={actions.toggleBook} onTurnPage={actions.turnPage} />
           <PixelCat />
           <CoffeeKitty />
-          <GlassButton className="flight-replay" hidden={!ui.replayVisible} aria-label="Fly the paper butterflies again" onClick={actions.replayButterflies}>✧ Paper butterflies</GlassButton>
+          <GlassButton className="flight-replay" hidden={!ui.replayVisible} aria-label="Fly the paper butterflies again" onClick={actions.replayButterflies}>Paper butterflies</GlassButton>
         </div>
       </main>
       <StickerStudio onPointerClaimed={actions.cancelPointer} />

@@ -19,7 +19,6 @@
   }
 
   .brand-wordmark { font-size: 30px; }
-  .brand-tagline { font-size: 6px; letter-spacing: .65px; }
 
   .header-actions { gap: 5px; }
 
@@ -61,9 +60,9 @@
     position: absolute;
     bottom: calc(100% + 12px);
     right: 0;
-    width: calc(100vw - 32px - var(--safe-left) - var(--safe-right));
+    width: 100%;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
   }
   .page-count { font-size: 10px; min-width: 29px; }
 
@@ -71,7 +70,7 @@
     min-width: 44px;
     min-height: 44px;
     font-size: 10px;
-    padding: 13px 15px;
+    padding: 12px;
   }
 
   .open-button {
@@ -85,13 +84,20 @@
 
   .flight-replay {
     left: 50%;
-    /* Keep one small gap above the page-navigation row. */
+    /* Closed-book placement; the open-book row is aligned below. */
     bottom: calc(136px + var(--safe-bottom));
     translate: -50% 0;
     min-height: 44px;
     font-size: 9px;
     padding: 10px 12px;
     white-space: nowrap;
+  }
+
+  .viewer-wrap:has(.page-navigation) .flight-replay {
+    left: calc(16px + var(--safe-left));
+    bottom: calc(80px + var(--safe-bottom));
+    translate: 0;
+    width: 124px;
   }
 
   .open-cue {
@@ -143,7 +149,6 @@
 @media (max-width: 380px) {
   .brand { gap: 5px; }
   .brand-wordmark { font-size: 27px; }
-  .brand-tagline { font-size: 5px; letter-spacing: .5px; }
   .header-actions { gap: 3px; }
   .sound .glass-button-content > span { font-size: 8px; }
   .camera-presets { gap: 6px; }
@@ -166,7 +171,8 @@
   .pixel-cat-companion { width: 88px; right: calc(16px + var(--safe-right)); bottom: calc(65px + var(--safe-bottom)); }
   .viewer-wrap:has(.page-navigation) .coffee-kitty-companion,
   .viewer-wrap:has(.page-navigation) .pixel-cat-companion { bottom: calc(65px + var(--safe-bottom)); }
-  .flight-replay { left: 50%; translate: -50% 0; bottom: calc(64px + var(--safe-bottom)); padding: 8px; }
+  .flight-replay,
+  .viewer-wrap:has(.page-navigation) .flight-replay { left: 50%; translate: -50% 0; bottom: calc(64px + var(--safe-bottom)); width: auto; padding: 8px; }
 }
 
 @media (hover: none) {

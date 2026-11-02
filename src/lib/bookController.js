@@ -188,11 +188,14 @@ export function createBookController(els, onUiChange) {
     }
   }
 
-  // Once open, page clicks only navigate. Closing stays on the explicit control.
+  // The first left page closes the cover; the final right page stays open.
   function clickBook(zone) {
     if (target !== 1) openBook();
     else if (zone === 'next') turnPage(turnTarget + 1);
-    else if (zone === 'prev') turnPage(turnTarget - 1);
+    else if (zone === 'prev') {
+      if (turnTarget === 0) closeBook();
+      else turnPage(turnTarget - 1);
+    }
   }
 
   function pageZone(element) {

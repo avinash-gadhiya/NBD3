@@ -1,6 +1,7 @@
 import pinkBow from '../../assets/images/pink-bow.png';
 import catDuo from '../../assets/stickers/frog-shark-cats.png';
 import PageSticker from './PageSticker.jsx';
+import PageMotif from './PageMotif.jsx';
 
 export default function Cover({ coverRef, content }) {
   const [wish1, wish2] = content.wishLines;
@@ -19,7 +20,7 @@ export default function Cover({ coverRef, content }) {
         <div className="inside-frame">
           <span className="tiny-label">{content.wishLabel}</span>
           <h2>Happy Birthday,<br /><em>{content.recipientName.split(' ')[0]}.</em></h2>
-          <div className="sun">✺</div>
+          <PageMotif kind="blossoms" />
           <p>{wish1}<br />{wish2}</p>
           <div className="love">{content.signature}</div>
           <span className="corner-flower">✿</span>

@@ -1,0 +1,6 @@
+Tool: built-in image_gen. Use case: background-extraction.
+Edit target: user's Diet Coke can on a white square. The two website screenshots
+are placement references only.
+
+Prompt:
+Use case: background-extraction. Edit target: the FIRST of the three user-attached images, the standalone silver Diet Coke can sticker on a plain white square. The second and third attachments are website placement references ONLY, do not reproduce either website. Remove the plain white surrounding background completely to actual alpha transparency. Keep the exact same silver Diet Coke can, red 'Coke' and black 'Diet' lettering, photographic metal texture, condensation, proportions, top and bottom rim, and its clean slim white die-cut sticker outline. Preserve the original artwork and lettering accurately; do not redesign, redraw, invent text or change the can. Tight vertical framing around the sticker with just a small transparent margin, upright centered can, about 1:1.8 aspect ratio. No white rectangle, no gray backdrop, no checkerboard pattern, no extra shadow outside the sticker, no page or website elements. This is a transparent PNG asset for an interactive peelable sticker in the user's birthday-card website.

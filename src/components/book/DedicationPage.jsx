@@ -1,4 +1,5 @@
 import PageSticker from './PageSticker.jsx';
+import PageMotif from './PageMotif.jsx';
 
 // Page 2, left side: the back of the turning leaf.
 export default function DedicationPage({ content }) {
@@ -11,7 +12,7 @@ export default function DedicationPage({ content }) {
       <div className="inside-frame">
         <span className="tiny-label">{content.dedicationLabel}</span>
         <h2>{title1}<br /><em>{title2}</em></h2>
-        <div className="sun">✿</div>
+        <PageMotif kind="sunflower" />
         <p>{line1}<br />{line2}</p>
         <div className="love">{content.dedicationSignature}</div>
         <span className="corner-flower">✳</span>

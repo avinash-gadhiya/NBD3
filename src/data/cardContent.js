@@ -1,6 +1,6 @@
 ﻿// Personal birthday keepsake. A matching recipient profile from /api/card may override these fields.
 export const defaultCardContent = {
-  recipientName: 'Nishtha Bhatt',
+  recipientName: 'Nistha Bhatt',
   birthDate: '2005-11-03',
   birthdayLabel: '3 November',
   birthYear: '2005',
@@ -11,7 +11,7 @@ export const defaultCardContent = {
   ribbon: 'WISHES, LITTLE WINS & NEW BEGINNINGS',
   pictureCaption: 'the little things',
   pageHeadline: ['LIFE IS LOVELIER', 'WITH YOU IN IT'],
-  pageHeadlineEmphasis: 'dear Nishtha.',
+  pageHeadlineEmphasis: 'dear Nistha.',
   pageMessage: ['For the long talks, the silly jokes, the everyday magic.', 'Here’s to another year of making memories together.'],
   wishLabel: '01 / A WISH FOR YOU',
   wishLines: ['May this birthday bring you the joy you give so freely.', 'More time for what you love, and people who feel like home.'],
@@ -19,7 +19,7 @@ export const defaultCardContent = {
   dedicationLabel: '02 / A NOTE TO MYSELF',
   dedicationTitle: ['Dear me,', 'I’m proud of you.'],
   dedicationLines: ['For showing up on the hard days and trying again.', 'I’m learning to trust my own voice, and be kinder to myself.'],
-  dedicationSignature: 'Love, Nishtha ♡',
+  dedicationSignature: 'Love, Nistha ♡',
   pageTwoHeadline: ['STILL LEARNING', 'STILL BECOMING'],
   pageTwoHeadlineEmphasis: 'still enough.',
   pageTwoMessage: ['I can have big dreams and take small steps.', 'There is room to grow and love who I am today.'],

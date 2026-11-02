@@ -2,11 +2,30 @@ import { useEffect, useRef, useState } from 'react';
 import GlassButton from './GlassButton.jsx';
 import catDuo from '../assets/stickers/frog-shark-cats.png';
 import pinkBow from '../assets/images/pink-bow.png';
+import dietCoke from '../assets/stickers/diet-coke-can.png';
+import { ImagePlus, LoaderCircle, Sticker, Trash2, Undo2, X } from 'lucide-react';
+import Icon from './Icon.jsx';
 
 const MAX_STICKERS = 10;
 const MAX_BYTES = 20 * 1024 * 1024;
+const STICKER_STYLES = [
+  { finish: 'print', label: 'Classic', preview: dietCoke, cut: .035 },
+  { finish: 'chrome', label: 'Holographic', preview: catDuo, cut: .05 },
+  { finish: 'glitter', label: 'Glitter', preview: pinkBow, cut: .05 },
+];
 
-function placement(index) {
+function placement(index, id) {
+  if (id === 'desk-diet-coke') {
+    if (window.innerWidth <= 750) {
+      if (window.innerHeight < 760) {
+        // Short phones use the gap beside the centered butterfly control.
+        const center = (80 + (window.innerWidth - 104) / 2) / 2;
+        return [center / window.innerWidth - .5, 174 / window.innerHeight - .5];
+      }
+      return [0, 238 / window.innerHeight - .5];
+    }
+    return [.34, -.08];
+  }
   if (window.innerWidth <= 750) {
     const top = Math.min(210, Math.max(164, window.innerHeight * .22));
     return [(index % 2 ? 1 : -1) * .3, .5 - (top + Math.floor(index / 2) * 16) / window.innerHeight];
@@ -30,8 +49,9 @@ export default function StickerStudio({ onPointerClaimed }) {
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
   const [items, setItems] = useState([]);
-  const [finish, setFinish] = useState('chrome');
-  const [status, setStatus] = useState('Getting the stickers ready…');
+  const [stickerStyle, setStickerStyle] = useState(STICKER_STYLES[1]);
+  const [status, setStatus] = useState('Loading stickers…');
+  const [error, setError] = useState('');
 
   useEffect(() => { claimHandler.current = onPointerClaimed; }, [onPointerClaimed]);
 
@@ -65,7 +85,7 @@ export default function StickerStudio({ onPointerClaimed }) {
         const state = instance.save();
         let changed = layoutChanged;
         for (const [index, sticker] of state.stickers.entries()) {
-          if (layoutChanged) sticker.at = placement(index);
+          if (layoutChanged) sticker.at = placement(index, sticker.id);
           const width = instance.get(sticker.id).def.width * stickerScale();
           const margin = Math.max(0, .5 - (width / 2 + 16) / window.innerWidth);
           const x = Math.max(-margin, Math.min(margin, sticker.at[0]));
@@ -86,18 +106,19 @@ export default function StickerStudio({ onPointerClaimed }) {
       await instance.add([
         { id: 'desk-cats', label: 'Frog and shark cats', src: catDuo, width, at: placement(0), rotation: -9, cut: .05, finish: 'chrome', material: 'vinyl' },
         { id: 'desk-bow', label: 'Pink bow', src: pinkBow, width: width * .8, at: placement(1), rotation: 12, cut: .05, finish: 'glitter', material: 'vinyl' },
+        { id: 'desk-diet-coke', label: 'Diet Coke can', src: dietCoke, width: window.innerWidth <= 750 && window.innerHeight < 760 ? (window.innerWidth < 360 ? 32 : 64) : 80, at: placement(2, 'desk-diet-coke'), rotation: -8, cut: .035, finish: 'print', material: 'vinyl' },
       ]);
       if (disposed) return;
       board.current = instance;
       setItems(instance.list().map(({ id }) => id));
       setReady(true);
-      setStatus('Drag a sticker’s edge to peel, then release to stick it down.');
+      setStatus('Stickers ready.');
     }
 
     const initialized = initialize().catch(error => {
       instance?.destroy();
       instance = null;
-      if (!disposed) setStatus('Stickers could not load. Refresh the page to try again.');
+      if (!disposed) { setStatus(''); setError('Unable to load stickers. Please refresh.'); }
       console.error('Could not start the sticker studio.', error);
     });
 
@@ -119,6 +140,7 @@ export default function StickerStudio({ onPointerClaimed }) {
     event.target.value = '';
     const instance = board.current;
     if (!instance || !files.length) return;
+    setError('');
     setBusy(true);
     let added = 0;
     const problems = [];
@@ -137,7 +159,7 @@ export default function StickerStudio({ onPointerClaimed }) {
           id, label: file.name.replace(/\.[^.]+$/, ''), src: url,
           width: 144,
           at: placement(instance.list().length), rotation: -6.1,
-          cut: .074, finish, material: 'vinyl',
+          cut: stickerStyle.cut, finish: stickerStyle.finish, material: 'vinyl',
           look: { bands: 1.46, dispersion: .34, flake: 1.7 },
         });
         if (board.current !== instance) return;
@@ -149,9 +171,10 @@ export default function StickerStudio({ onPointerClaimed }) {
         }
       }
       setItems(instance.list().map(({ id }) => id));
-      setStatus([added ? `${added} ${added === 1 ? 'sticker' : 'stickers'} added. Drag an edge to peel.` : '', ...problems].filter(Boolean).join(' '));
+      setStatus(added ? `${added} ${added === 1 ? 'sticker' : 'stickers'} added.` : '');
+      setError(problems.join(' '));
     } catch (error) {
-      if (board.current === instance) setStatus('That image could not be added. Try a different image.');
+      if (board.current === instance) { setStatus(''); setError('Unable to add this image. Try PNG, WebP or JPG.'); }
       console.error('Could not add a sticker.', error);
     } finally {
       if (board.current === instance) setBusy(false);
@@ -171,39 +194,38 @@ export default function StickerStudio({ onPointerClaimed }) {
     }
     if (all) extras.current.forEach(extra => extra.clear?.());
     setItems(instance.list().map(({ id: key }) => key));
-    setStatus(all ? 'Stickers cleared. Upload an image to add a new one.' : 'Last sticker removed.');
+    setError('');
+    setStatus(all ? 'Stickers cleared.' : 'Last sticker removed.');
   }
 
   return (
     <>
       <div className="sticker-canvas-root" ref={canvasRoot} />
-      <aside className="sticker-studio" aria-label="Decorate with stickers" data-stickers-ignore>
+      <aside className="sticker-studio" aria-label="Decorate with stickers" data-stickers-ignore data-birds-ignore onKeyDown={event => { if (event.key === 'Escape') setOpen(false); }}>
         <GlassButton className="sticker-toggle" aria-expanded={open} aria-controls="sticker-panel" onClick={() => setOpen(value => !value)}>
-          <span aria-hidden="true">✧</span> Add stickers
+          <Icon icon={Sticker} />Add stickers
         </GlassButton>
         {open && (
-          <section className="sticker-panel" id="sticker-panel" aria-label="Your stickers">
-            <div className="sticker-panel-heading"><h2>A little extra fun.</h2><button className="sticker-close" aria-label="Close stickers panel" onClick={() => setOpen(false)}>×</button></div>
-            <p>Peel, move and stick your favourite images around the card.</p>
-            <label className="sticker-finish">Finish
-              <select value={finish} onChange={event => setFinish(event.target.value)}>
-                <option value="chrome">Holographic</option>
-                <option value="glitter">Glitter</option>
-                <option value="print">Printed</option>
-              </select>
-            </label>
-            <input ref={picker} className="sr-only" type="file" accept="image/*" multiple tabIndex={-1} onChange={addImages} aria-label="Choose sticker images" />
-            <GlassButton className="sticker-upload" onClick={() => picker.current.click()} disabled={!ready || busy || items.length >= MAX_STICKERS}>{busy ? 'Adding stickers…' : '+ Upload images'}</GlassButton>
-            <p className="sticker-note">Transparent PNGs work best. Images stay in this tab.</p>
-            <div className="sticker-panel-actions">
-              <span>{items.length} / {MAX_STICKERS}</span>
-              <button onClick={() => removeStickers()} disabled={!items.length || busy}>Remove last</button>
-              <button onClick={() => removeStickers(true)} disabled={!items.length || busy}>Clear all</button>
+          <section className="sticker-panel" id="sticker-panel" aria-labelledby="sticker-panel-title" data-birds-pause>
+            <div className="sticker-panel-heading"><h2 id="sticker-panel-title">Add stickers</h2><button className="sticker-close" aria-label="Close stickers panel" onClick={() => setOpen(false)}><Icon icon={X} size={16} /></button></div>
+            <div className="sticker-style-options" role="group" aria-label="Style for new stickers">
+              {STICKER_STYLES.map(style => (
+                <button key={style.finish} type="button" className="sticker-style" aria-pressed={stickerStyle.finish === style.finish} disabled={busy} onClick={() => setStickerStyle(style)}>
+                  <img src={style.preview} alt="" aria-hidden="true" />
+                  <span>{style.label}</span>
+                </button>
+              ))}
             </div>
-            <p className="sticker-help">Drag an edge to peel. Release to stick.<br />Keyboard: Tab, Enter, then arrow keys.</p>
-            <p className="sticker-status" role="status">{status}</p>
+            <input ref={picker} className="sr-only" type="file" accept="image/*" multiple tabIndex={-1} onChange={addImages} aria-label="Choose sticker images" />
+            <div className="sticker-panel-actions">
+              <GlassButton className="sticker-upload" onClick={() => picker.current.click()} disabled={!ready || busy || items.length >= MAX_STICKERS}><Icon icon={busy ? LoaderCircle : ImagePlus} className={busy ? 'icon-spin' : ''} />{busy ? 'Adding…' : 'Upload images'}</GlassButton>
+              <button className="sticker-manage" aria-label="Remove last sticker" title="Remove last sticker" onClick={() => removeStickers()} disabled={!items.length || busy}><Icon icon={Undo2} size={16} /></button>
+              <button className="sticker-manage" aria-label="Clear all stickers" title="Clear all stickers" onClick={() => removeStickers(true)} disabled={!items.length || busy}><Icon icon={Trash2} size={16} /></button>
+            </div>
+            {error && <p className="sticker-error" role="alert">{error}</p>}
           </section>
         )}
+        <p className="sr-only" role="status">{status}</p>
       </aside>
     </>
   );

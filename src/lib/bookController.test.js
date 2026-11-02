@@ -148,30 +148,60 @@ test('rapid navigation and reversing an in-flight turn finish on the requested s
 test('clicking right pages and left page backs follows the three-page sequence', t => {
   const h = setup(t);
   h.click('.front'); h.visiblePage(1);
-  h.click('.back'); h.visiblePage(1);
-  assert.equal(h.ui.opened, true, 'The first left page does not close the book');
   h.click('.right-page', '.leaf-front'); h.visiblePage(2);
   h.click('.right-page', '.leaf-front', '.page-two'); h.visiblePage(3);
-  h.click('.right-page', '.page-three'); h.visiblePage(3);
-  assert.equal(h.ui.opened, true, 'The final right page does not close the book');
   h.click('.leaf-back'); h.visiblePage(2);
   h.click('.leaf-back'); h.visiblePage(1);
   h.click('.spine'); h.visiblePage(1);
   assert.equal(h.ui.opened, true, 'Other book surfaces do not close the book');
 });
 
-test('raised portraits, figures and cake navigate without closing the book', t => {
+test('raised portraits, figures and cake navigate between interior spreads', t => {
   const h = setup(t);
   h.click('.front');
   for (const artwork of ['.half-right', '.cat-stand', '.cake-half']) {
     h.click(artwork); h.visiblePage(2);
     h.click('.half-right'); h.visiblePage(3);
-    h.click('.cat-stand'); h.visiblePage(3);
     h.click('.half-left'); h.visiblePage(2);
-    h.click('.half-left'); h.visiblePage(1);
     h.click('.half-left'); h.visiblePage(1);
     assert.equal(h.ui.opened, true);
   }
+});
+
+test('final-page taps stay open, then the first left page closes the book', t => {
+  const h = setup(t);
+  h.click('.front');
+  h.click('.right-page', '.leaf-front');
+  h.click('.right-page', '.page-two');
+  h.visiblePage(3);
+  h.click('.right-page', '.page-three');
+  h.visiblePage(3);
+  assert.equal(h.ui.opened, true);
+  h.click('.leaf-back'); h.visiblePage(2);
+  h.click('.leaf-back'); h.visiblePage(1);
+  h.click('.back');
+  assert.equal(h.ui.opened, false);
+  assert.match(h.els.cover.style.transform, /rotateY\(0deg\)/);
+  assert.equal(h.els.thirdStand.style.visibility, 'hidden');
+  h.click('.front');
+  h.visiblePage(1);
+  assert.equal(h.ui.opened, true);
+});
+
+test('dragging or cancelling a pointer on the first left page does not close the book', t => {
+  const h = setup(t);
+  h.controller.toggleBook(); h.advance();
+  const target = h.pointerTarget('.back');
+  const pointer = { target, pointerId: 2, clientX: 500, clientY: 300, button: 0 };
+  h.els.viewer.listeners.pointerdown(pointer);
+  h.els.viewer.listeners.pointermove({ ...pointer, clientX: 530 });
+  h.els.viewer.listeners.pointerup({ ...pointer, type: 'pointerup' });
+  h.advance(); h.visiblePage(1);
+  assert.equal(h.ui.opened, true);
+  h.els.viewer.listeners.pointerdown(pointer);
+  h.els.viewer.listeners.pointercancel({ ...pointer, type: 'pointercancel' });
+  h.advance(); h.visiblePage(1);
+  assert.equal(h.ui.opened, true);
 });
 
 test('dragging, cancelled pointers, modified clicks and background clicks do not turn pages', t => {

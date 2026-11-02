@@ -6,8 +6,9 @@ export function createButtonBirds(layer) {
   let disposed = false;
   let frame;
   let pointer = null;
+  let paused = Boolean(document.querySelector('[data-birds-pause]'));
   const random = (min, max) => min + Math.random() * (max - min);
-  const active = () => !disposed && !document.hidden && !motion.matches;
+  const active = () => !disposed && !paused && !document.hidden && !motion.matches;
   const slots = button => button.offsetWidth < 64 ? [.5] : button.offsetWidth < 110 ? [.3, .7] : [.22, .5, .78];
   const position = bird => {
     const rect = bird.button.getBoundingClientRect();
@@ -32,7 +33,7 @@ export function createButtonBirds(layer) {
     }, delay);
   }
   function visible(button) {
-    if (!button.isConnected || button.disabled || button.closest('.hs-keys, [hidden], [aria-hidden="true"]')) return false;
+    if (!button.isConnected || button.disabled || button.closest('.hs-keys, [hidden], [aria-hidden="true"], [data-birds-ignore]')) return false;
     const rect = button.getBoundingClientRect();
     if (!rect.width || !rect.height || rect.left < 0 || rect.top < 16 || rect.right > innerWidth || rect.bottom > innerHeight) return false;
     const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
@@ -113,6 +114,11 @@ export function createButtonBirds(layer) {
     });
   }
   function refresh() {
+    const nextPaused = Boolean(document.querySelector('[data-birds-pause]'));
+    if (nextPaused !== paused) {
+      paused = nextPaused;
+      restart();
+    }
     if (!active()) return;
     for (const bird of birds) {
       if (!bird.button) continue;
@@ -157,7 +163,7 @@ export function createButtonBirds(layer) {
   }
 
   const observer = new MutationObserver(refresh);
-  observer.observe(document.getElementById('root'), { subtree: true, childList: true, attributes: true, attributeFilter: ['hidden', 'disabled'] });
+  observer.observe(document.getElementById('root'), { subtree: true, childList: true, attributes: true, attributeFilter: ['hidden', 'disabled', 'data-birds-pause', 'data-birds-ignore'] });
   window.addEventListener('pointermove', move, { passive: true });
   window.addEventListener('pointerdown', press, { passive: true });
   window.addEventListener('click', press);

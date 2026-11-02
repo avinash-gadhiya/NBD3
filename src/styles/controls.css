@@ -56,8 +56,18 @@ button .circle-overlay {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: inherit;
+  gap: 6px;
 }
+
+.ui-icon { display: block; flex-shrink: 0; }
+.fullscreen-button { display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+.sticker-close, .music-close { display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+.sticker-panel-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
+.camera-presets .glass-button-content, .page-button .glass-button-content, .flight-replay .glass-button-content { gap: 4px; }
+@media (prefers-reduced-motion: no-preference) {
+  .icon-spin { animation: icon-spin 1s linear infinite; }
+}
+@keyframes icon-spin { to { transform: rotate(360deg); } }
 
 button:not(:disabled):hover {
   background: linear-gradient(145deg, #ffffffb3, #ffffff4d 65%, #fff4f580);
@@ -124,15 +134,6 @@ header button { pointer-events: auto; }
 }
 
 .brand-wordmark > span { color: #d386a2; }
-
-.brand-tagline {
-  font-size: 7px;
-  line-height: 1.4;
-  font-weight: 500;
-  letter-spacing: 1.1px;
-  text-transform: uppercase;
-  color: #947c7e;
-}
 
 .header-actions {
   display: flex;
@@ -228,6 +229,16 @@ header button { pointer-events: auto; }
 
 .experience.dragging { cursor: grabbing; }
 
+/* The book is a custom tap target, so suppress the browser's blue tap overlay
+   and long-press selection without changing the page-turn pointer handlers. */
+.experience,
+.experience * {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .open-cue {
   position: absolute;
   bottom: 120px;
@@ -238,7 +249,7 @@ header button { pointer-events: auto; }
   pointer-events: none;
 }
 
-.open-cue span { margin-left: 8px; }
+.open-cue span { display: inline-flex; vertical-align: middle; margin-left: 8px; }
 
 .book-controls {
   position: fixed;
@@ -252,6 +263,9 @@ header button { pointer-events: auto; }
 }
 
 .page-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 14px 20px;
   border-radius: 40px;
   color: #3d5c45;
@@ -290,6 +304,7 @@ header button { pointer-events: auto; }
 .open-button .glass-button-content {
   width: 100%;
   justify-content: space-between;
+  gap: inherit;
 }
 
 .btn-icon {

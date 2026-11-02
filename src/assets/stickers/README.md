@@ -7,8 +7,17 @@ The decorative stickers have fixed, scattered positions across the three spreads
 The Meow/cat artwork on the final right page remains a fixed decoration.
 StickerStudio adds a separate viewport layer in the empty space around the book,
 using Jhey's holo stickers 1.0.0 engine with residue and bubbles. Its Add stickers
-panel accepts local images and offers holographic and printed finishes. Images
+panel offers three styles with artwork previews: Classic (printed white edge),
+Holographic, and Glitter, plus upload/remove/clear controls. The selected style
+applies to new uploads; existing stickers keep their appearance. Images
 stay in this browser tab; uploaded object URLs are released on removal/unmount.
 Enter peels/sticks the focused sticker, arrows move it, and Q/E rotate it.
+
+The Diet Coke can is a transparent cutout from the user's supplied image,
+prepared with built-in image_gen (see diet-coke-can.prompt.txt). It is a third
+foreground sticker with a printed vinyl finish and the same peel interaction.
+Desktop placement uses the empty space below the bow. Phones place the can below
+the book and above the footer controls; short phones use a smaller can beside
+the centered butterfly control.
 
 The Diet Coke quote sticker fills the open area on the second spread. Its mask removes the gray surrounding backdrop and preserves the original white die-cut shape and lettering.

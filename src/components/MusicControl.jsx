@@ -3,6 +3,8 @@ import { useMusicPlayer } from '../hooks/useMusicPlayer.js';
 import { parseYouTubeVideoId } from '../lib/youtube.js';
 import YouTubePlayer, { initialYouTubeState } from './YouTubePlayer.jsx';
 import GlassButton from './GlassButton.jsx';
+import { ExternalLink, LoaderCircle, Music, Pause, Play, X } from 'lucide-react';
+import Icon from './Icon.jsx';
 
 export default function MusicControl() {
   const { audioRef, music, actions } = useMusicPlayer();
@@ -69,7 +71,7 @@ export default function MusicControl() {
   return (
     <div className="music-control" ref={container}>
       <GlassButton ref={trigger} className="sound" data-playing={audible} aria-expanded={open} aria-controls={open ? panelId : undefined} aria-haspopup="dialog" onClick={() => setOpen(value => !value)}>
-        <span aria-hidden="true">♫</span><span>{label}</span>
+        <Icon icon={Music} size={16} /><span>{label}</span>
       </GlassButton>
       <input ref={picker} type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac,.opus" aria-label="Choose a song from your device" hidden onChange={selectSong} />
       <audio ref={audioRef} hidden />
@@ -78,7 +80,7 @@ export default function MusicControl() {
           <div hidden={!open}>
             <div className="music-panel-heading">
               <div><p className="music-eyebrow">A LITTLE BACKGROUND MUSIC</p><h2 id={titleId}>Your card, your soundtrack.</h2></div>
-              <GlassButton className="music-close" aria-label={keepPlayer ? 'Minimize music controls' : 'Close music controls'} onClick={close}>×</GlassButton>
+              <GlassButton className="music-close" aria-label={keepPlayer ? 'Minimize music controls' : 'Close music controls'} onClick={close}><Icon icon={X} size={16} /></GlassButton>
             </div>
             <div className="music-sources" role="group" aria-label="Choose a music source">
               <GlassButton aria-pressed={isYouTube} onClick={() => chooseSource('youtube')}>YouTube</GlassButton>
@@ -92,8 +94,8 @@ export default function MusicControl() {
                   <label htmlFor={linkId}>YouTube song link</label>
                   <input ref={firstControl} id={linkId} type="text" inputMode="url" autoCapitalize="none" autoCorrect="off" spellCheck="false" placeholder="Paste a YouTube link…" value={link} aria-invalid={Boolean(linkError)} aria-describedby={linkError ? errorId : undefined} onChange={event => { setLink(event.target.value); setLinkError(''); }} />
                   {linkError && <p className="music-error" id={errorId} role="alert">{linkError}</p>}
-                  <GlassButton className="music-primary" type="submit">▶ Play from YouTube</GlassButton>
-                  <a className="music-link" href={searchUrl} target="_blank" rel="noopener noreferrer">Find a song on YouTube ↗</a>
+                  <GlassButton className="music-primary" type="submit"><Icon icon={Play} />Play from YouTube</GlassButton>
+                  <a className="music-link" href={searchUrl} target="_blank" rel="noopener noreferrer">Find a song on YouTube<Icon icon={ExternalLink} size={12} /></a>
                   <p className="youtube-help">Find your song, copy its link, and paste it here.</p>
                 </form>
               )}
@@ -102,7 +104,7 @@ export default function MusicControl() {
                   <div className="youtube-mini-heading" hidden={open}>
                     <span>Your YouTube song</span>
                     <GlassButton className="music-mini-edit" onClick={() => setOpen(true)}>Edit</GlassButton>
-                    <GlassButton className="music-close" aria-label="Stop and remove YouTube song" onClick={removeYouTube}>×</GlassButton>
+                    <GlassButton className="music-close" aria-label="Stop and remove YouTube song" onClick={removeYouTube}><Icon icon={X} size={16} /></GlassButton>
                   </div>
                   <YouTubePlayer key={videoRequest} ref={youtubeRef} videoId={videoId} volume={music.volume} onChange={patch => setYouTube(value => ({ ...value, ...patch }))} />
                   <p className="music-status youtube-status" aria-live="polite">{youtube.loading ? youtube.ready ? 'Buffering…' : 'Connecting to YouTube…' : youtube.playing ? 'Playing on YouTube' : 'Press Play to start or resume.'}</p>
@@ -110,11 +112,11 @@ export default function MusicControl() {
                   {youtube.error && <p className="music-error" role="alert">{youtube.error}</p>}
                   <div hidden={!open}>
                     <div className="music-actions">
-                      <GlassButton ref={!editing ? firstControl : undefined} className="music-primary" disabled={!youtube.ready || Boolean(youtube.error)} onClick={toggleYouTube}>{youtube.playing || youtube.loading ? 'Ⅱ Pause song' : '▶ Play song'}</GlassButton>
+                      <GlassButton ref={!editing ? firstControl : undefined} className="music-primary" disabled={!youtube.ready || Boolean(youtube.error)} onClick={toggleYouTube}><Icon icon={youtube.playing || youtube.loading ? Pause : Play} />{youtube.playing || youtube.loading ? 'Pause song' : 'Play song'}</GlassButton>
                       <GlassButton className="music-change" onClick={() => setEditing(value => !value)}>Change song</GlassButton>
                     </div>
                     {volumeControl()}
-                    <a className="music-link" href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer">Open this song on YouTube ↗</a>
+                    <a className="music-link" href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer">Open this song on YouTube<Icon icon={ExternalLink} size={12} /></a>
                   </div>
                 </div>
               )}
@@ -124,15 +126,15 @@ export default function MusicControl() {
             <div className="device-content">
               {!music.fileName ? <>
                 <p className="music-description">Choose a song from your device. It will play on repeat while you explore.</p>
-                <GlassButton ref={firstControl} className="music-primary music-file-choose" onClick={() => picker.current?.click()}>♫ Choose a song</GlassButton>
+                <GlassButton ref={firstControl} className="music-primary music-file-choose" onClick={() => picker.current?.click()}><Icon icon={Music} />Choose a song</GlassButton>
                 <p className="music-formats">MP3, WAV, OGG or M4A</p>
               </> : <>
-                <div className="music-track"><span className="music-note" aria-hidden="true">♫</span><div>
+                <div className="music-track"><span className="music-note" aria-hidden="true"><Icon icon={Music} size={22} /></span><div>
                   <p className="music-track-name" title={music.fileName}>{music.fileName.replace(/\.[^.]+$/, '')}</p>
                   <p className="music-status" aria-live="polite">{music.loading ? 'Loading your song…' : music.playing ? music.volume === 0 ? 'Playing · muted' : 'Playing on repeat' : 'Paused'}</p>
                 </div></div>
                 <div className="music-actions">
-                  <GlassButton ref={firstControl} className="music-primary" disabled={music.loading} onClick={actions.togglePlayback}>{music.loading ? 'Loading…' : music.playing ? 'Ⅱ Pause song' : '▶ Play song'}</GlassButton>
+                  <GlassButton ref={firstControl} className="music-primary" disabled={music.loading} onClick={actions.togglePlayback}><Icon icon={music.loading ? LoaderCircle : music.playing ? Pause : Play} className={music.loading ? 'icon-spin' : ''} />{music.loading ? 'Loading…' : music.playing ? 'Pause song' : 'Play song'}</GlassButton>
                   <GlassButton className="music-change" onClick={() => picker.current?.click()}>Change song</GlassButton>
                 </div>
                 {volumeControl()}

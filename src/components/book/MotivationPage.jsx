@@ -1,4 +1,5 @@
 import PageSticker from './PageSticker.jsx';
+import PageMotif from './PageMotif.jsx';
 
 // The reverse of the second leaf becomes the left side of page 3.
 export default function MotivationPage({ content }) {
@@ -11,7 +12,7 @@ export default function MotivationPage({ content }) {
       <div className="inside-frame">
         <span className="tiny-label">{content.motivationLabel}</span>
         <h2>{title1}<br /><em>{title2}</em></h2>
-        <div className="sun" aria-hidden="true">✧</div>
+        <PageMotif kind="swan" />
         <p>{line1}<br />{line2}</p>
         <div className="love">{content.motivationSignature}</div>
         <span className="corner-flower" aria-hidden="true">✳</span>
